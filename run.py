@@ -16,3 +16,11 @@ except paramiko.SSHException as e:
     print(f"SSH connection error: {e}")
 except Exception as e:
     print(f"An unexpected error occurred: {e}")
+
+if client.get_transport().is_active(): # Check if connection is still active
+    stdin, stdout, stderr = client.exec_command('zfs list')
+    print("Command output:")
+    print(stdout.read().decode())
+    if stderr.read().decode():
+        print("Error output:")
+        print(stderr.read().decode())
